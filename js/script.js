@@ -1,5 +1,5 @@
 $(function () {
-  // const tl = gsap.timeline();
+  const tl = gsap.timeline();
 
   // header
   tl.from(".logo", { y: -100, autoAlpha: 0 });
@@ -12,12 +12,16 @@ $(function () {
   tl.from(".copyright", { x: -50, autoAlpha: 0 }, "-=0.4");
 
   // bruce lee
-  tl.from(".bruce-lee-bg", {
-    autoAlpha: 0,
-    scale: 0.9,
-    duration: 3,
-    ease: "none",
-  });
+  tl.from(
+    ".bruce-lee-bg",
+    {
+      autoAlpha: 0,
+      scale: 0.9,
+      duration: 3,
+      ease: "none",
+    },
+    1 // 전체 타임라인의 1초 지점에서 시작
+  );
 
   tl.from(".bruce-lee", {
     autoAlpha: 0,
@@ -38,6 +42,7 @@ $(function () {
       x: -50,
       autoAlpha: 0,
       duration: 1,
+      onComplete: () => Splitting(),
     },
     "-=0.8"
   );
@@ -46,10 +51,15 @@ $(function () {
     xPercent: 200 /* 200% */,
     duration: 0.7,
     ease: "elastic.inOut(1,0.3)",
+    onComplete: () => {
+      $(".small-bruce-lee").addClass("action");
+    },
   });
 
   // 여기 skip할 때 도달할 지점
   tl.addLabel("end");
+
+  tl.from(".btn-skip", { x: -100, autoAlpha: 0 }, 0);
 
   // skip클릭했을 때
   $(".btn-skip").on("click", () => {
